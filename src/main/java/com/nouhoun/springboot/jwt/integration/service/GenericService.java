@@ -9,9 +9,9 @@ import java.util.List;
  * Created by nydiarra on 06/05/17.
  */
 public interface GenericService {
-    User findByUsername(String username);
+    User getUserByUsername(String username);
 
-    List<User> findAllUsers();
+    List<User> getAllUsers();
 
-    List<RandomCity> findAllRandomCities();
+    List<RandomCity> getAllRandomCities();
 }
