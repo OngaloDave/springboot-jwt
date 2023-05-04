@@ -18,18 +18,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/springjwt")
 public class ResourceController {
-    @Autowired
-    private GenericService userService;
+    private final GenericService genericService;
 
-    @RequestMapping(value ="/cities")
-    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
-    public List<RandomCity> getUser(){
-        return userService.findAllRandomCities();
+    public ResourceController(GenericService genericService) {
+        this.genericService = genericService;
     }
 
-    @RequestMapping(value ="/users", method = RequestMethod.GET)
+    @GetMapping("/cities")
+    @PreAuthorize("hasAnyAuthority('ADMIN_USER', 'STANDARD_USER')")
+    public List<RandomCity> getAllRandomCities() {
+        return genericService.findAllRandomCities();
+    }
+
+    @GetMapping("/users")
     @PreAuthorize("hasAuthority('ADMIN_USER')")
-    public List<User> getUsers(){
-        return userService.findAllUsers();
+    public List<User> getAllUsers() {
+        return genericService.findAllUsers();
     }
 }
